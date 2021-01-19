@@ -2,7 +2,6 @@ const User = require('../models/user');
 const shortId = require('shortid');
 const jwt = require('jsonwebtoken');
 const expressJwt = require('express-jwt');
-require('dotenv').config();
 
 exports.signup = (req, res) => {
   const { name, email, password } = req.body;
@@ -47,4 +46,9 @@ exports.signin = (req, res) => {
       user: { _id, username, name, email, role },
     });
   });
+};
+
+exports.signout = (req, res) => {
+  res.clearCookie('token');
+  res.json({ message: 'Signout success' });
 };
