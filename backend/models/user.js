@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const crypto = require('crypto');
-const { S_IROTH } = require('constants');
+const { v4: uuidv4 } = require('uuid');
 
 const userSchema = new mongoose.Schema(
   {
@@ -57,9 +57,8 @@ const userSchema = new mongoose.Schema(
 userSchema
   .virtual('password')
   .set(function (password) {
-    console.log(this);
     this._password = password;
-    this.salt = this.makeSalt();
+    this.salt = uuidv4();
     this.hashed_password = this.encryptPassword(password);
   })
   .get(function () {
@@ -71,7 +70,6 @@ userSchema.methods = {
     return this.encryptPassword(plainText) === this.hashed_password;
   },
   encryptPassword: function (password) {
-    console.log(this);
     if (!password) return '';
 
     try {
@@ -82,9 +80,6 @@ userSchema.methods = {
     } catch (err) {
       return '';
     }
-  },
-  makeSalt: function () {
-    return Math.round(new Date().valueOf() * Math.random()) + '';
   },
 };
 
