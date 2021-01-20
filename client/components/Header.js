@@ -11,7 +11,6 @@ import {
   NavItem,
   NavLink,
 } from 'reactstrap';
-import { rgb } from 'color';
 
 const Example = (props) => {
   const [isOpen, setIsOpen] = useState(false);
