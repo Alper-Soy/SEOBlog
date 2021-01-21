@@ -12,6 +12,6 @@ const {
   adminMiddleware,
 } = require('../middlewares/authMiddleware');
 
-router.get('/profile', requireSignin, authMiddleware, adminMiddleware, getUser);
+router.get('/profile', requireSignin, authMiddleware, getUser);
 
 module.exports = router;
