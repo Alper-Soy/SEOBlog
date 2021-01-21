@@ -21,6 +21,7 @@ const app = express();
 // Routes
 const blogRoutes = require('./routes/blog');
 const authRoutes = require('./routes/auth');
+const userRoutes = require('./routes/user');
 
 // Middlewares
 app.use(cors());
@@ -30,6 +31,7 @@ app.use(cookieParser());
 
 app.use('/api', blogRoutes);
 app.use('/api', authRoutes);
+app.use('/api', userRoutes);
 
 const port = process.env.PORT || 8000;
 app.listen(port, () => {

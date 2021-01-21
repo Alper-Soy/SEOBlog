@@ -19,8 +19,7 @@ router.post('/signup', userSignupValidator, runValidation, signup);
 router.post('/signin', userSigninValidator, runValidation, signin);
 router.get('/signout', signout);
 router.get('/secret', requireSignin, (req, res) => {
-  console.log(req.auth);
-  res.json({ message: 'You have access to secret page' });
+  res.json({ user: req.user });
 });
 
 module.exports = router;
