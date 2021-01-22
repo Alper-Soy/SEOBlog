@@ -9,3 +9,17 @@
 .nav-item {
   cursor: pointer;
 }
+
+.admin-index {
+  border: none;
+}
+
+.admin-index-a {
+  text-decoration: none;
+  font-size: medium;
+  color: #464646;
+}
+.admin-index-a:hover {
+  text-decoration: underline;
+  color: #007aff;
+}
