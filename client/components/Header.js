@@ -5,6 +5,7 @@ import NProgress from 'nprogress';
 
 import { APP_NAME } from '../config';
 import { signout, isAuth } from '../actions/auth';
+import '../node_modules/nprogress/nprogress.css';
 
 Router.onRouteChangeStart = (url) => NProgress.start();
 Router.onRouteChangeComplete = (url) => NProgress.done();
@@ -26,54 +27,55 @@ const Example = (props) => {
 
   return (
     <div>
-      <Navbar color='light' light expand='md'>
-        <Link href='/' passHref>
-          <NavLink className='font-weight-bold text-dark'>{APP_NAME}</NavLink>
-        </Link>
-        <NavbarToggler onClick={toggle} />
-        <Collapse isOpen={isOpen} navbar>
-          <Nav className='ml-auto' navbar>
-            {!isAuth() && (
-              <React.Fragment>
+      {process.browser && (
+        <Navbar color='light' light expand='md'>
+          <Link href='/' passHref>
+            <NavLink className='font-weight-bold text-dark'>{APP_NAME}</NavLink>
+          </Link>
+          <NavbarToggler onClick={toggle} />
+          <Collapse isOpen={isOpen} navbar>
+            <Nav className='ml-auto' navbar>
+              {!isAuth() && (
+                <React.Fragment>
+                  <NavItem>
+                    <Link href='/signin' passHref>
+                      <NavLink>Signin</NavLink>
+                    </Link>
+                  </NavItem>
+                  <NavItem>
+                    <Link href='/signup' passHref>
+                      <NavLink>Signup</NavLink>
+                    </Link>
+                  </NavItem>
+                </React.Fragment>
+              )}
+              {isAuth() && isAuth().role === 0 && (
                 <NavItem>
-                  <Link href='/signin' passHref>
-                    <NavLink>Signin</NavLink>
+                  <Link href='/user' passHref>
+                    <NavLink passHref>{`${isAuth().name}'s Dashboard`}</NavLink>
                   </Link>
                 </NavItem>
+              )}
+              {isAuth() && isAuth().role === 1 && (
                 <NavItem>
-                  <Link href='/signup' passHref>
-                    <NavLink>Signup</NavLink>
+                  <Link href='/admin' passHref>
+                    <NavLink>{`${isAuth().name}'s Dashboard`}</NavLink>
                   </Link>
                 </NavItem>
-              </React.Fragment>
-            )}
-            {isAuth() && isAuth().role === 0 && (
-              <NavItem>
-                <Link href='/user' passHref>
-                  <NavLink passHref>{`${isAuth().name}'s Dashboard`}</NavLink>
-                </Link>
-              </NavItem>
-            )}
-            {isAuth() && isAuth().role === 1 && (
-              <NavItem>
-                <Link href='/admin' passHref>
-                  <NavLink>{`${isAuth().name}'s Dashboard`}</NavLink>
-                </Link>
-              </NavItem>
-            )}
-            {isAuth() && (
-              <NavItem>
-                <NavLink
-                  style={{ cursor: 'pointer' }}
-                  onClick={() => signout(() => Router.replace('/signin'))}
-                >
-                  Signout
-                </NavLink>
-              </NavItem>
-            )}
-          </Nav>
-        </Collapse>
-      </Navbar>
+              )}
+              {isAuth() && (
+                <NavItem>
+                  <NavLink
+                    onClick={() => signout(() => Router.replace('/signin'))}
+                  >
+                    Signout
+                  </NavLink>
+                </NavItem>
+              )}
+            </Nav>
+          </Collapse>
+        </Navbar>
+      )}
     </div>
   );
 };
