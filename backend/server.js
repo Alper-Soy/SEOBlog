@@ -12,6 +12,7 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
+    useFindAndModify: false,
   })
   .then(() => console.log('MongoDB connected!'))
   .catch((err) => console.log('MongoDB connection error: ', err));
@@ -23,6 +24,7 @@ const blogRoutes = require('./routes/blog');
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const categoryRoutes = require('./routes/category');
+const tagRoutes = require('./routes/tag');
 
 // Middlewares
 app.use(cors());
@@ -34,6 +36,7 @@ app.use('/api', blogRoutes);
 app.use('/api', authRoutes);
 app.use('/api', userRoutes);
 app.use('/api', categoryRoutes);
+app.use('/api', tagRoutes);
 
 const port = process.env.PORT || 8000;
 app.listen(port, () => {
