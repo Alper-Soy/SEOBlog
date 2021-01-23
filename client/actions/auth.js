@@ -14,6 +14,7 @@ export const signup = (user) => {
     .then((response) => response.json())
     .catch((err) => console.log(err));
 };
+
 export const signin = (user) => {
   return fetch(`${API}/signin`, {
     method: 'POST',
