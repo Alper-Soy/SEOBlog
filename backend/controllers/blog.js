@@ -46,16 +46,24 @@ exports.create = (req, res) => {
       });
     }
 
+    const slug = slugify(title).toLowerCase();
+    const excerpt = smartTrim(body, 320, ' ', ' ...');
+    const mtitle = `${title} | ${process.env.APP_NAME}`;
+    const mdesc = stripHtml(body.substring(0, 160)).result;
+    const arrayOfCategories = categories && categories.split(',');
+    const arrayOfTags = tags && tags.split(',');
+    const postedBy = req.user._id;
+
     let blog = new Blog({
       title,
       body,
-      slug: slugify(title).toLowerCase(),
-      excerpt: smartTrim(body, 320, ' ', ' ...'),
-      mtitle: `${title} | ${process.env.APP_NAME}`,
-      mdesc: stripHtml(body.substring(0, 160)).result,
-      categories: categories && categories.split(','),
-      tags: tags && tags.split(','),
-      postedBy: req.user._id,
+      slug,
+      excerpt,
+      mtitle,
+      mdesc,
+      categories: arrayOfCategories,
+      tags: arrayOfTags,
+      postedBy,
     });
 
     if (files.photo) {
