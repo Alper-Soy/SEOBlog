@@ -127,10 +127,11 @@ const Category = () => {
 
   const newCategoryFom = () => (
     <form onSubmit={clickSubmit}>
-      <div className='form-group'>
+      <div className='form-group '>
         <label className='text-muted'>Name</label>
         <input
           type='text'
+          placeholder='Enter Category'
           className='form-control'
           onChange={handleChange}
           value={name}

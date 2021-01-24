@@ -127,6 +127,7 @@ const Tag = () => {
       <div className='form-group'>
         <label className='text-muted'>Name</label>
         <input
+          placeholder='Enter Tag'
           type='text'
           className='form-control'
           onChange={handleChange}
