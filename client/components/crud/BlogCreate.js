@@ -122,7 +122,7 @@ const CreateBlog = ({ router }) => {
     } else {
       all.splice(clickedCategory, 1);
     }
-    console.log(all);
+    // console.log(all);
     setChecked(all);
     formData.set('categories', all);
   };
@@ -138,7 +138,7 @@ const CreateBlog = ({ router }) => {
     } else {
       all.splice(clickedTag, 1);
     }
-    console.log(all);
+    // console.log(all);
     setCheckedTag(all);
     formData.set('tags', all);
   };
@@ -210,17 +210,7 @@ const CreateBlog = ({ router }) => {
   return (
     <div className='container-fluid'>
       <div className='row'>
-        <div className='col-md-8'>
-          {createBlogForm()}
-          <hr />
-          {JSON.stringify(title)}
-          <hr />
-          {JSON.stringify(body)}
-          <hr />
-          {JSON.stringify(categories)}
-          <hr />
-          {JSON.stringify(tags)}
-        </div>
+        <div className='col-md-8'>{createBlogForm()}</div>
 
         <div className='col-md-4'>
           <div>
