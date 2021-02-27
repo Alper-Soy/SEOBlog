@@ -6,6 +6,10 @@
   display: none !important;
 }
 
+.ql-editor {
+  min-height: 300px;
+}
+
 .nav-item {
   cursor: pointer;
 }

@@ -9,6 +9,7 @@ import { getTags } from '../../actions/tag';
 import { createBlog } from '../../actions/blog';
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import '../../node_modules/react-quill/dist/quill.snow.css';
+import { QuillFormats, QuillModules } from '../../helpers/quill';
 
 const CreateBlog = ({ router }) => {
   const blogFromLS = () => {
@@ -47,6 +48,7 @@ const CreateBlog = ({ router }) => {
     title,
     hidePublishButton,
   } = values;
+
   const token = getCookie('token');
 
   useEffect(() => {
@@ -77,10 +79,10 @@ const CreateBlog = ({ router }) => {
 
   const publishBlog = (e) => {
     e.preventDefault();
-    // console.log('ready to publishBlog');
+
     createBlog(formData, token).then((data) => {
       if (data.error) {
-        setValues({ ...values, error: data.error });
+        setValues({ ...values, error: data.error, success: '' });
       } else {
         setValues({
           ...values,
@@ -99,7 +101,7 @@ const CreateBlog = ({ router }) => {
     // console.log(e.target.value);
     const value = name === 'photo' ? e.target.files[0] : e.target.value;
     formData.set(name, value);
-    setValues({ ...values, [name]: value, formData, error: '' });
+    setValues({ ...values, [name]: value, formData, error: '', success: '' });
   };
 
   const handleBody = (e) => {
@@ -190,8 +192,8 @@ const CreateBlog = ({ router }) => {
 
         <div className='form-group'>
           <ReactQuill
-            modules={CreateBlog.modules}
-            formats={CreateBlog.formats}
+            modules={QuillModules}
+            formats={QuillFormats}
             value={body}
             placeholder='Write something amazing...'
             onChange={handleBody}
@@ -207,10 +209,34 @@ const CreateBlog = ({ router }) => {
     );
   };
 
+  const showError = () => (
+    <div
+      className='alert alert-danger'
+      style={{ display: error ? '' : 'none' }}
+    >
+      {error}
+    </div>
+  );
+
+  const showSuccess = () => (
+    <div
+      className='alert alert-success'
+      style={{ display: success ? '' : 'none' }}
+    >
+      {success}
+    </div>
+  );
+
   return (
     <div className='container-fluid'>
       <div className='row'>
-        <div className='col-md-8'>{createBlogForm()}</div>
+        <div className='col-md-8'>
+          {createBlogForm()}{' '}
+          <div className='pt-3'>
+            {showError()}
+            {showSuccess()}
+          </div>{' '}
+        </div>
 
         <div className='col-md-4'>
           <div>
@@ -260,34 +286,5 @@ const CreateBlog = ({ router }) => {
     </div>
   );
 };
-
-CreateBlog.modules = {
-  toolbar: [
-    [{ header: '1' }, { header: '2' }, { header: [3, 4, 5, 6] }, { font: [] }],
-    [{ size: [] }],
-    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-    [{ list: 'ordered' }, { list: 'bullet' }],
-    ['link', 'image', 'video'],
-    ['clean'],
-    ['code-block'],
-  ],
-};
-
-CreateBlog.formats = [
-  'header',
-  'font',
-  'size',
-  'bold',
-  'italic',
-  'underline',
-  'strike',
-  'blockquote',
-  'list',
-  'bullet',
-  'link',
-  'image',
-  'video',
-  'code-block',
-];
 
 export default withRouter(CreateBlog);
