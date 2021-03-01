@@ -10,6 +10,7 @@ const {
   read,
   remove,
   update,
+  photo,
 } = require('../controllers/blog');
 
 // Middlewares
@@ -22,5 +23,6 @@ router.post('/blogs-categories-tags', listAllBlogsCategoriesTags);
 router.get('/blog/:slug', read);
 router.delete('/blog/:slug', requireSignin, adminMiddleware, remove);
 router.put('/blog/:slug', requireSignin, adminMiddleware, update);
+router.get('/blog/photo/:slug', photo);
 
 module.exports = router;
